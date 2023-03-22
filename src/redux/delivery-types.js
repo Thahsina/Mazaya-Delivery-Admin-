@@ -1,0 +1,6 @@
+
+export const  SET_USERS = 'SET_USERS'
+
+export const CONTENT_DISABLED = 'CONTENT_DISABLED'
+export const APP_DISABLED = 'APP_DISABLED'
+export const APP_ENABLED = 'APP_ENABLED'
