@@ -1,20 +1,22 @@
 // import React from 'react';
-import {
-  SET_USERS
-} from "./delivery-types";
+import { FETCH_PRODUCTS, SET_USERS } from "./delivery-types";
 
 const initialState = {
-  users: []  ,
-}
+  users: [],
+  products: [],
+};
 export const userReducer = (state = initialState, action) => {
- //function restaurntReducer  (state = initialState, action){
-  
+  //function restaurntReducer  (state = initialState, action){
+
   switch (action.type) {
-    case SET_USERS
-    :{
-      return {...state, users: action.users}
-    } 
-     default: return state   
+    case SET_USERS: {
+      return { ...state, users: action.users };
     }
+    case FETCH_PRODUCTS: {
+      return { ...state, products: action.products };
+    }
+    default:
+      return state;
   }
-  //export default restaurntReducer
+};
+//export default restaurntReducer

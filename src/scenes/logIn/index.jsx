@@ -11,7 +11,6 @@ import {
   Box,
   Grid,
   Link,
-  
 } from "@mui/material";
 import { Formik } from "formik";
 // import axios from "axios";
@@ -45,7 +44,9 @@ function Copyright(props) {
   );
 }
 
-const LogIn = ({ getUsers }) => {
+
+
+const LogIn = ({ users, getUsers }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [loginCerds, setLoginCred] = useState({
     userName: "",
@@ -54,15 +55,6 @@ const LogIn = ({ getUsers }) => {
 
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  //   const handleSubmit = (event) => {
-  //     event.preventDefault();
-  //     const data = new FormData(event.currentTarget);
-
-  //     console.log({
-  //       email: data.get("email"),
-  //       password: data.get("password"),
-  //     });
-  //   };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -76,24 +68,26 @@ const LogIn = ({ getUsers }) => {
   };
   const handleLoginSubmit = (values) => {
     // e.preventDefault();
-   
+
     console.log("values", values);
     console.log("username", values.username);
     setLoginCred({
       [loginCerds.userName]: values.username,
       [loginCerds.password]: values.password,
     });
-    // getPostsData();
+    // getUsers()
+    // console.log(getUsers.result)
   };
 
   const loginSchema = yup.object().shape({
     username: yup.string().required("required"),
     password: yup.string().required("required"),
+
   });
 
-  //   useEffect(() => {
-  //     getUsers(loginCerds);
-  //   }, []);
+  useEffect(() => {
+    getUsers(loginCerds);
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -130,7 +124,6 @@ const LogIn = ({ getUsers }) => {
               Log in
             </Typography>
 
-            
             <Formik
               onSubmit={handleLoginSubmit}
               initialValues={initialValues}
@@ -231,9 +224,9 @@ const LogIn = ({ getUsers }) => {
   );
 };
 
-// const mapStateToProps = (state) => ({
-//   users: state.userReducer.users,
-// });
-// export default connect(mapStateToProps, { getUsers })(LogIn);
+const mapStateToProps = (state) => ({
+  users: state.userReducer.users,
+});
+export default connect(mapStateToProps, { getUsers })(LogIn);
 
-export default LogIn;
+// export default LogIn;

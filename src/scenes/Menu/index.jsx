@@ -5,19 +5,24 @@ import {
   ListSubheader,
   ListItemIcon,
   ListItemText,
-  //   Switch,
+    Switch,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
 // import { alpha, styled } from "@mui/material/styles";
 import YellowSwitch from "../../components/YellowSwitch";
+import { getProducts } from "../../redux/delivery-thunks";
+import { connect, useSelector } from "react-redux";
+import { products } from "../../data/mockProductData";
 import Majboos from "../../assets/majboos.png";
 import brunet from "../../assets/brunet.jpeg";
 
 const Menu = () => {
   //   const theme = useTheme();
   const [checked, setChecked] = useState(["wifi"]);
-
+  console.log(products)
+  
+  
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
     const newChecked = [...checked];
@@ -34,7 +39,7 @@ const Menu = () => {
   return (
     <Box m="1rem 2.5rem">
       {/* <FlexBetween gap="3.5rem"> */}
-      <Header title="Manage Menu" />
+      {/* <Header title="Manage Menu" /> */}
 
       {/* </FlexBetween> */}
       <List
@@ -46,12 +51,13 @@ const Menu = () => {
         }}
         subheader={<ListSubheader>Toggle Available Menu Items</ListSubheader>}
       >
-        <ListItem>
+        {products.map((product) => (
+          <ListItem>
           <ListItemIcon>
             <Box
               component="img"
               alt="profile"
-              src={brunet}
+              src={product.image_url}
               height="45px"
               width="45px"
               borderRadius="50%"
@@ -60,19 +66,21 @@ const Menu = () => {
           </ListItemIcon>
           <ListItemText
             id="switch-list-label-wifi"
-            primary="Creamy Pesto Pasta"
+            primary={product.name}
             secondary="Qr 34"
           />
           <YellowSwitch
             edge="end"
-            onChange={handleToggle("Creamy Pesto Pasta")}
-            checked={checked.indexOf("Creamy Pesto Pasta") !== -1}
+            onChange={handleToggle(product.name)}
+            checked={checked.indexOf(product.name) !== -1}
             inputProps={{
               "aria-labelledby": "switch-list-label-bluetooth",
             }}
           />
         </ListItem>
-        <ListItem>
+        ))}
+        
+        {/* <ListItem>
           <Box
             component="img"
             alt="profile"
@@ -171,112 +179,11 @@ const Menu = () => {
               "aria-labelledby": "switch-list-label-bluetooth",
             }}
           />
-        </ListItem>
-        <ListItem>
-          <ListItemIcon>
-            <Box
-              component="img"
-              alt="profile"
-              src={brunet}
-              height="45px"
-              width="45px"
-              borderRadius="50%"
-              sx={{ objectFit: "cover", marginRight: "15px" }}
-            />
-          </ListItemIcon>
-          <ListItemText
-            id="switch-list-label-bluetooth"
-            primary="Dynamite Chicken Wings"
-            secondary="Qr 25"
-          />
-          <YellowSwitch
-            edge="end"
-            onChange={handleToggle("Dynamite Chicken Wings")}
-            checked={checked.indexOf("Dynamite Chicken Wings") !== -1}
-            inputProps={{
-              "aria-labelledby": "switch-list-label-bluetooth",
-            }}
-          />
-        </ListItem>
-        <ListItem>
-          <ListItemIcon>
-            <Box
-              component="img"
-              alt="profile"
-              src={brunet}
-              height="45px"
-              width="45px"
-              borderRadius="50%"
-              sx={{ objectFit: "cover", marginRight: "15px" }}
-            />
-          </ListItemIcon>
-          <ListItemText
-            id="switch-list-label-bluetooth"
-            primary="Fried Chicken"
-            secondary="Qr 25"
-          />
-          <YellowSwitch
-            name="Fried Chicken"
-            edge="end"
-            onChange={handleToggle("Fried Chicken")}
-            checked={checked.indexOf("Fried Chicken") !== -1}
-            inputProps={{
-              "aria-labelledby": "switch-list-label-bluetooth",
-            }}
-          />
-        </ListItem>
-        <ListItem>
-          <ListItemIcon>
-            <Box
-              component="img"
-              alt="profile"
-              src={brunet}
-              height="45px"
-              width="45px"
-              borderRadius="50%"
-              sx={{ objectFit: "cover", marginRight: "15px" }}
-            />
-          </ListItemIcon>
-          <ListItemText
-            id="switch-list-label-bluetooth"
-            primary="Veggie Salad"
-            secondary="Qr 25"
-          />
-          <YellowSwitch
-            edge="end"
-            onChange={handleToggle("Veggie Salad")}
-            checked={checked.indexOf("Veggie Salad") !== -1}
-            inputProps={{
-              "aria-labelledby": "switch-list-label-bluetooth",
-            }}
-          />
-        </ListItem>
-        <ListItem>
-          <ListItemIcon>
-            <Box
-              component="img"
-              alt="profile"
-              src={brunet}
-              height="45px"
-              width="45px"
-              borderRadius="50%"
-              sx={{ objectFit: "cover", marginRight: "15px" }}
-            />
-          </ListItemIcon>
-          <ListItemText
-            id="switch-list-label-bluetooth"
-            primary="Heavebly Platter"
-            secondary="Qr 25"
-          />
-          <YellowSwitch
-            edge="end"
-            onChange={handleToggle("Heavebly Platter")}
-            checked={checked.indexOf("Heavebly Platter") !== -1}
-            inputProps={{
-              "aria-labelledby": "switch-list-label-bluetooth",
-            }}
-          />
-        </ListItem>
+        </ListItem> */}
+        
+        
+        
+        
       </List>
     </Box>
   );
